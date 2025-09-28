@@ -6,14 +6,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Izin extends Model
 {
-    protected $table = 'izins'; // sesuaikan jika beda
+    protected $table = 'izins';
 
     protected $fillable = [
-        'siswa_id','nama_anak','kelas','status_kehadiran','alasan','bukti','bukti_path','status','tanggal'
+        'siswa_id',
+        'orang_tua_id',
+        'tanggal_mulai',
+        'tanggal_selesai',
+        'alasan',
+        'bukti',
+        'status',
+        'catatan_wali',
     ];
 
     public function siswa()
     {
-        return $this->belongsTo(\App\Models\Siswa::class, 'siswa_id');
+        return $this->belongsTo(Siswa::class, 'siswa_id');
+    }
+
+    public function orangTua()
+    {
+        return $this->belongsTo(User::class, 'orang_tua_id');
     }
 }

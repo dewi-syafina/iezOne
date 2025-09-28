@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Orang Tua
+// ======================= ORANG TUA =======================
 Route::middleware(['auth'])->prefix('orangtua')->name('orangtua.')->group(function () {
     Route::get('/izin', [OrangTuaIzinController::class, 'index'])->name('izin.index');
     Route::get('/izin/create', [OrangTuaIzinController::class, 'create'])->name('izin.create');
@@ -43,51 +43,29 @@ Route::middleware(['auth'])->prefix('orangtua')->name('orangtua.')->group(functi
     Route::get('/dashboard', [OrangTuaDashboardController::class, 'index'])->name('dashboard');
 });
 
-// Wali Kelas
+// ======================= WALI KELAS =======================
 Route::middleware(['auth'])->prefix('walikelas')->name('walikelas.')->group(function () {
     Route::get('/pengajuan', [WaliPengajuanController::class, 'index'])->name('pengajuan.index');
     Route::patch('/pengajuan/{izin}', [WaliPengajuanController::class, 'updateStatus'])->name('pengajuan.update');
     Route::get('/dashboard', [WaliDashboardController::class, 'index'])->name('dashboard');
-});
 
-// Siswa
-Route::middleware(['auth'])->prefix('siswa')->name('siswa.')->group(function () {
-    Route::get('/status', [SiswaStatusController::class, 'index'])->name('status.index');
-    Route::get('/dashboard', [SiswaDashboardController::class, 'index'])->name('dashboard');
-    
-});
-
-
-Route::middleware(['auth', 'role:siswa'])->group(function () {
-    Route::get('/siswa/dashboard', [DashboardSiswaController::class, 'index'])
-        ->name('dashboard.siswa');
-});
-
-
-// Tambahkan ini ke file web.php Anda setelah routes yang sudah ada
-
-// Siswa - Routes tambahan untuk fitur lengkap
-Route::middleware(['auth'])->prefix('siswa')->name('siswa.')->group(function () {
-    Route::get('/status', [SiswaStatusController::class, 'index'])->name('status.index');
-    Route::get('/dashboard', [SiswaDashboardController::class, 'index'])->name('dashboard');
-    
-    // Routes tambahan untuk izin siswa (opsional - jika siswa bisa langsung ajukan izin)
-    Route::get('/izin', [App\Http\Controllers\Siswa\IzinController::class, 'index'])->name('izin.index');
-    Route::get('/izin/create', [App\Http\Controllers\Siswa\IzinController::class, 'create'])->name('izin.create');
-    Route::post('/izin', [App\Http\Controllers\Siswa\IzinController::class, 'store'])->name('izin.store');
-    Route::get('/izin/{izin}', [App\Http\Controllers\Siswa\IzinController::class, 'show'])->name('izin.show');
-});
-
-// Update routes Wali Kelas untuk konsistensi
-Route::middleware(['auth'])->prefix('walikelas')->name('walikelas.')->group(function () {
-    Route::get('/pengajuan', [WaliPengajuanController::class, 'index'])->name('pengajuan.index');
-    Route::patch('/pengajuan/{izin}', [WaliPengajuanController::class, 'updateStatus'])->name('pengajuan.update');
-    Route::get('/dashboard', [WaliDashboardController::class, 'index'])->name('dashboard');
-    
-    // Route untuk update status izin (sesuaikan dengan yang digunakan di dashboard wali kelas)
+    // update status izin
     Route::put('/izin/{izin}', [WaliPengajuanController::class, 'updateStatus'])->name('izin.update');
 });
 
+// ======================= SISWA =======================
+Route::middleware(['auth'])->prefix('siswa')->name('siswa.')->group(function () {
+    Route::get('/status', [SiswaStatusController::class, 'index'])->name('status.index');
+    Route::get('/dashboard', [SiswaDashboardController::class, 'index'])->name('dashboard');
+
+    // izin siswa
+    Route::get('/izin', [SiswaIzinController::class, 'index'])->name('izin.index');
+    Route::get('/izin/create', [SiswaIzinController::class, 'create'])->name('izin.create');
+    Route::post('/izin', [SiswaIzinController::class, 'store'])->name('izin.store');
+    Route::get('/izin/{izin}', [SiswaIzinController::class, 'show'])->name('izin.show');
+});
+
+// ======================= LAPORAN =======================
 Route::middleware(['auth'])->group(function () {
     Route::get('/laporan/siswa', [LaporanController::class, 'siswa'])->name('laporan.siswa');
 });

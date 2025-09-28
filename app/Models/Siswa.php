@@ -24,7 +24,7 @@ class Siswa extends Model
 
     public function orangTua()
     {
-        return $this->hasOne(OrangTua::class);
+        return $this->belongsTo(User::class, 'orang_tua_id');
     }
 
 

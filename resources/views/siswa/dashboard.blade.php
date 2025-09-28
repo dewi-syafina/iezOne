@@ -31,23 +31,48 @@
 
   <!-- Main content -->
   <main class="flex-1 p-8 overflow-y-auto">
-    <h1 class="text-3xl font-bold text-emerald-700">Halo, {{ $user->name ?? Auth::user()->name }} 👋</h1>
-    <p class="text-gray-600">Berikut status izin yang diajukan untukmu oleh orang tua.</p>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 mb-6">
-      <div class="bg-white rounded-xl shadow p-6">
+        <div class="flex items-center space-x-3 mb-6">
+      <div class="bg-gradient-to-br from-emerald-500 to-green-600 p-3 rounded-xl shadow">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8c1.657 0 3-1.343 3-3S13.657 2 12 2s-3 1.343-3 3 1.343 3 3 3zM12 14c-2.21 0-4-1.79-4-4H4v8c0 2.21 1.79 4 4 4h8c2.21 0 4-1.79 4-4v-8h-4c0 2.21-1.79 4-4 4z"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="text-3xl font-bold text-emerald-700">Halo, {{ $user->name ?? Auth::user()->name }} 👋</h1>
+        <p class="text-gray-600">Berikut status izin yang diajukan untukmu oleh orang tua.</p>
+      </div>
+    </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 mb-6">
+    <div class="bg-white rounded-xl shadow p-6 flex items-center space-x-4">
+      <div class="bg-emerald-100 text-emerald-700 p-3 rounded-full">
+        📊
+      </div>
+      <div>
         <h3 class="text-sm text-gray-600">Total Izin</h3>
         <div class="text-2xl font-bold text-emerald-700">{{ $totalIzin ?? 0 }}</div>
       </div>
-      <div class="bg-white rounded-xl shadow p-6">
+    </div>
+    <div class="bg-white rounded-xl shadow p-6 flex items-center space-x-4">
+      <div class="bg-green-100 text-green-600 p-3 rounded-full">
+        ✅
+      </div>
+      <div>
         <h3 class="text-sm text-gray-600">Disetujui</h3>
         <div class="text-2xl font-bold text-green-600">{{ $izinDisetujui ?? 0 }}</div>
       </div>
-      <div class="bg-white rounded-xl shadow p-6">
+    </div>
+    <div class="bg-white rounded-xl shadow p-6 flex items-center space-x-4">
+      <div class="bg-red-100 text-red-600 p-3 rounded-full">
+        ❌
+      </div>
+      <div>
         <h3 class="text-sm text-gray-600">Ditolak</h3>
         <div class="text-2xl font-bold text-red-600">{{ $izinDitolak ?? 0 }}</div>
       </div>
     </div>
+  </div>
+
 
     <!-- Tabel / Riwayat -->
     <div class="bg-white rounded-xl shadow p-6">

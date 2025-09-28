@@ -1,17 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\OrangTua;
+namespace App\Http\Controllers\Orangtua;
 
 use App\Http\Controllers\Controller;
 use App\Models\Izin;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function index()
+   public function index()
     {
-        $orangTua = auth()->user()->orangTua;   // ambil data orang tua
-        $siswa = $orangTua->siswa;              // ambil anak (siswa) nya
+        $orangtua = Auth::user();
+        $siswa = $orangtua->siswa; // relasi hasOne
 
-        return view('orangtua.dashboard', compact('orangTua', 'siswa'));
+        if (!$siswa) {
+            // solusi 1: tampilkan view khusus
+            return view('orangtua.no-siswa'); 
+
+            // atau solusi 2: redirect ke halaman lain (contoh ke /profile)
+            // return redirect()->route('profile.edit')
+            //     ->with('error', 'Belum ada siswa yang terhubung dengan akun ini.');
+        }
+
+        $izins = Izin::where('siswa_id', $siswa->id)->get();
+
+        return view('orangtua.dashboard', compact('izins', 'siswa'));
     }
 }

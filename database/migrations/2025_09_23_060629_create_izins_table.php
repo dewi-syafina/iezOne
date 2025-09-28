@@ -13,15 +13,17 @@ return new class extends Migration
     {
         Schema::create('izins', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_anak');
+            $table->foreignId('siswa_id')->constrained('siswas')->onDelete('cascade');
+            $table->foreignId('orang_tua_id')->constrained('users')->onDelete('cascade');
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
             $table->text('alasan');
-            $table->string('bukti')->nullable(); // simpan path foto
+            $table->string('bukti')->nullable();
             $table->enum('status', ['pending', 'disetujui', 'ditolak'])->default('pending');
             $table->text('catatan_wali')->nullable();
             $table->timestamps();
         });
+
     }
 
 

@@ -9,31 +9,36 @@ use App\Models\Izin;
 
 class DashboardController extends Controller
 {
-    public function index()
+        public function index()
     {
         $user = Auth::user();
-        $siswa = auth()->user()->siswa;  
-        $siswa = $user->siswa; // pastikan relasi user->siswa ada
 
-        // Jika akun orang belum terhubung ke siswa, kirim data kosong agar view tidak error
+        // ambil siswa milik orang tua yang login
+        $siswa = $user->siswa;
+
         if (!$siswa) {
             $izins = collect();
             $totalIzin = 0;
             $izinDisetujui = 0;
             $izinDitolak = 0;
-            return view('siswa.dashboard', compact('izins','totalIzin','izinDisetujui','izinDitolak','user'));
+
+            return view('siswa.dashboard', compact(
+                'izins','totalIzin','izinDisetujui','izinDitolak','user'
+            ));
         }
 
-        // Ambil semua izin milik siswa
+        // Ambil izin hanya untuk anaknya
         $izins = Izin::where('siswa_id', $siswa->id)
-            ->with('orangTua','waliKelas') // optional, jika relasi ada
+            ->with('orangTua','waliKelas')
             ->orderByDesc('created_at')
             ->get();
 
-        $totalIzin = $izins->count();
-        $izinDisetujui = $izins->where('status','disetujui')->count();
-        $izinDitolak = $izins->where('status','ditolak')->count();
+        $totalIzin     = $izins->count();
+        $izinDisetujui = $izins->where('status', 'disetujui')->count();
+        $izinDitolak   = $izins->where('status', 'ditolak')->count();
 
-        return view('siswa.dashboard', compact('izins','totalIzin','izinDisetujui','izinDitolak','user'));
+        return view('siswa.dashboard', compact(
+            'izins','totalIzin','izinDisetujui','izinDitolak','user'
+        ));
     }
 }

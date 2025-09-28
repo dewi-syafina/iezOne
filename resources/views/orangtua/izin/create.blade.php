@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h2>Ajukan Izin</h2>
-    <form action="{{ route('orangtua.izin.store') }}" method="POST">
+    <form action="{{ route('orangtua.izin.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label>Tanggal Mulai</label>
@@ -17,7 +17,12 @@
             <label>Alasan</label>
             <textarea name="alasan" class="form-control" required></textarea>
         </div>
+        <div class="mb-3">
+            <label>Bukti (opsional)</label>
+            <input type="file" name="bukti" class="form-control">
+        </div>
         <button type="submit" class="btn btn-success">Kirim</button>
     </form>
+
 </div>
 @endsection

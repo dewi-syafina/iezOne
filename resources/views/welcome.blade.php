@@ -14,24 +14,24 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        <!-- Custom Styles for Pastel Cute Theme (Biru & Pink Pastel, Tanpa Gradasi) -->
+        <!-- Custom Styles for Educational Pastel Theme -->
         <style>
             .pastel-bg {
-                background-color: #FFB6C1; /* Biru Pastel Solid - Cute & Calming */
+                background-color: #E3F2FD; /* Biru Pendidikan Lembut */
             }
             .glass-effect {
-                background: rgba(255, 255, 255, 0.8);
-                backdrop-filter: blur(10px);
-                border: 1px solid rgba(255, 182, 193, 0.3); /* Aksen Pink Pastel */
+                background: rgba(255, 255, 255, 0.9);
+                backdrop-filter: blur(12px);
+                border: 1px solid rgba(100, 181, 246, 0.4); /* Aksen Biru Pastel */
             }
             .input-glass {
-                background: rgba(255, 182, 193, 0.2); /* Pink Pastel Ringan */
-                border: 1px solid #A7C7E7; /* Border Biru Pastel */
-                color: #4B5563; /* Text Gelap untuk Readability */
+                background: rgba(227, 242, 253, 0.4); /* Biru Soft */
+                border: 1px solid #4DB6AC; /* Border Hijau Toska */
+                color: #374151;
             }
             .input-glass:focus {
-                background: rgba(255, 182, 193, 0.3);
-                border-color: #A7C7E7; /* Focus Pink Pastel */
+                background: rgba(227, 242, 253, 0.6);
+                border-color: #4DB6AC;
                 outline: none;
             }
             .hover-lift {
@@ -39,7 +39,7 @@
             }
             .hover-lift:hover {
                 transform: translateY(-5px);
-                box-shadow: 0 10px 25px rgba(167, 199, 231, 0.3); /* Shadow Biru Pastel */
+                box-shadow: 0 10px 25px rgba(100, 181, 246, 0.4); /* Biru Shadow */
             }
             .fade-in {
                 animation: fadeIn 1s ease-in-out;
@@ -53,77 +53,88 @@
             }
             @keyframes pulse {
                 0%, 100% { opacity: 1; }
-                50% { opacity: .8; }
+                50% { opacity: .85; }
             }
             .pastel-button-primary {
-                background-color: #FFB6C1; /* Pink Pastel untuk Tombol Utama */
-                color: #4B5563;
-                border: 1px solid #A7C7E7; /* Border Biru */
+                background-color: #64B5F6; /* Biru Pendidikan */
+                color: #fff;
+                border: 1px solid #4DB6AC;
             }
             .pastel-button-primary:hover {
-                background-color: #A7C7E7; /* Hover ke Biru Pastel */
-                color: #4B5563;
+                background-color: #4DB6AC; /* Hijau Toska */
+                color: #fff;
             }
             .pastel-link {
-                color: #FFB6C1; /* Link Pink Pastel */
+                color: #64B5F6; /* Link Biru */
             }
             .pastel-link:hover {
-                color: #A7C7E7; /* Hover Biru */
+                color: #FBC02D; /* Hover Kuning Ceria */
             }
-            /* SVG Pattern dengan Aksen Pink Pastel */
+            /* SVG Pattern Aksen */
             .pattern-stroke {
-                stroke: rgba(255, 182, 193, 0.2);
+                stroke: rgba(100, 181, 246, 0.15);
+            }
+            .icon-pattern {
+                fill: rgba(77, 182, 172, 0.15); /* Hijau Toska Transparan */
             }
         </style>
     </head>
-    <body class="font-sans text-gray-800 antialiased"> <!-- Text Gelap untuk Bg Light -->
+    <body class="font-sans text-gray-800 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 pastel-bg relative overflow-hidden">
-            <!-- Subtle Background Pattern (Aksen Pink Pastel) -->
-            <div class="absolute inset-0 opacity-20">
-                <svg class="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background Grid Pattern -->
+            <div class="absolute inset-0 opacity-15">
+                <svg class="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                     <defs>
-                        <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                            <path d="M 10 0 L 0 0 0 10" fill="none" class="pattern-stroke" stroke-width="1"/>
+                        <pattern id="edu-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <!-- Grid -->
+                            <path d="M 40 0 L 0 0 0 40" fill="none" class="pattern-stroke" stroke-width="1"/>
+                            <!-- Buku -->
+                            <rect x="5" y="5" width="10" height="8" rx="1" class="icon-pattern"/>
+                            <!-- Pensil -->
+                            <polygon points="25,5 28,10 22,10" class="icon-pattern"/>
+                            <!-- Papan tulis -->
+                            <rect x="10" y="25" width="18" height="10" rx="2" class="icon-pattern"/>
                         </pattern>
                     </defs>
-                    <rect width="100" height="100" fill="url(#grid)"/>
+                    <rect width="100%" height="100%" fill="url(#edu-grid)"/>
                 </svg>
             </div>
 
-            <!-- Logo Section -->
+            <!-- Logo -->
             <div class="z-10 relative fade-in mb-8">
                 <img src="{{ asset('images/organization-logo.png') }}" 
                      alt="Logo Organisasi" 
-                     class="w-24 h-24 mx-auto rounded-full shadow-lg border-4 border-pink-200 logo-pulse" 
+                     class="w-24 h-24 mx-auto rounded-full shadow-lg border-4 border-blue-200 logo-pulse" 
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
                 
                 <x-application-logo class="w-20 h-20 fill-current text-gray-700 mx-auto hidden" />
             </div>
 
             <!-- Main Content -->
-            <div class="z-10 relative w-full sm:max-w-lg text-center px-6 py-8 fade-in">
-                <h1 class="text-4xl sm:text-5xl font-bold text-gray-800 mb-4 tracking-tight">
+            <div class="z-10 relative w-full sm:max-w-lg text-center px-6 py-8 fade-in glass-effect rounded-2xl shadow-xl">
+                <h1 class="text-4xl sm:text-5xl font-bold text-blue-700 mb-4 tracking-tight">
                     IEZ-ONE
                 </h1>
-                <p class="text-xl text-gray-700 mb-8 leading-relaxed max-w-md mx-auto">
-                    Sistem Izin Tidak Masuk Sekolah untuk Kelas XII PPLG 2. 
-                    Kelola izin Anda dengan mudah, aman, dan efisien di era digital.
+                <p class="text-lg text-gray-700 mb-8 leading-relaxed max-w-md mx-auto">
+                    Sistem Izin Tidak Masuk Sekolah untuk <b>Kelas XII PPLG 2</b> 
+                    Didesain dengan konsep digital, ramah pengguna, dan mendukung <span class="text-blue-600 font-semibold">pembelajaran modern</span>.
                 </p>
 
-                <!-- Tombol Log In & Register (Pastel Cute) -->
+                <!-- Tombol -->
                 <div class="space-y-4 sm:space-y-0 sm:flex sm:space-x-4 sm:justify-center">
                     <a href="{{ route('login') }}" 
-                       class="block w-full sm:w-auto px-8 py-4 bg-white glass-effect text-gray-800 font-semibold rounded-xl hover-lift text-center transition-all duration-300 pastel-button-primary">
+                       class="block w-full sm:w-auto px-8 py-4 glass-effect text-gray-800 font-semibold rounded-xl hover-lift text-center transition-all duration-300 pastel-button-primary">
                         Masuk
                     </a>
                     <a href="{{ route('register') }}" 
-                       class="block w-full sm:w-auto px-8 py-4 pastel-button-primary text-gray-800 font-semibold rounded-xl hover-lift text-center transition-all duration-300 shadow-lg">
+                       class="block w-full sm:w-auto px-8 py-4 pastel-button-primary text-white font-semibold rounded-xl hover-lift text-center transition-all duration-300 shadow-lg">
                         Daftar
                     </a>
                 </div>
 
                 <p class="text-gray-600 mt-8 text-sm">
-                    Dibuat untuk mendukung pembelajaran dan administrasi siswa Kelas XII PPLG 2.
+                    Dibuat untuk mendukung administrasi & kedisiplinan siswa dalam dunia pendidikan.  
+                    <span class="text-yellow-600 font-medium">Belajar lebih mudah, tertata, dan efisien.</span>
                 </p>
             </div>
 

@@ -26,23 +26,31 @@ class IzinController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'status_kehadiran' => 'required|string',
-            'alasan' => 'nullable|string',
-            'bukti' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'alasan' => 'required|string',
+            'bukti' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
         ]);
 
-        $path = $request->file('bukti')->store('izin', 'public');
+        $path = $request->hasFile('bukti')
+            ? $request->file('bukti')->store('izin', 'public')
+            : null;
+
+        $orangTua = Auth::user();
+        $siswa = $orangTua->siswa; // pastikan relasi User → Siswa ada
 
         Izin::create([
-            'nama_anak' => Auth::user()->siswa->nama,
-            'kelas' => Auth::user()->siswa->kelas,
-            'status_kehadiran' => $request->status_kehadiran,
+            'siswa_id' => $siswa->id,
+            'orang_tua_id' => $orangTua->id,
+            'tanggal_mulai' => $request->tanggal_mulai,
+            'tanggal_selesai' => $request->tanggal_selesai,
             'alasan' => $request->alasan,
             'bukti' => $path,
             'status' => 'pending',
         ]);
 
-        return redirect()->back()->with('success', true);
+        return redirect()->route('orangtua.izin.index')->with('success', 'Izin berhasil diajukan.');
     }
+
 
 }

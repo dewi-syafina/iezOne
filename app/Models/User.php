@@ -50,9 +50,8 @@ class User extends Authenticatable
 
    public function siswa()
     {
-        return $this->hasOne(Siswa::class, 'user_id');
+        return $this->hasOne(\App\Models\Siswa::class, 'orang_tua_id');
     }
-
 
 
     public function anak()
@@ -62,6 +61,9 @@ class User extends Authenticatable
 
     public function orangTua()
     {
-        return $this->hasOne(OrangTua::class);
+        return $this->
+        hasOne(OrangTua::class);
     }
 }
+
+
