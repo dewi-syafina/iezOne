@@ -13,7 +13,7 @@
   <aside class="w-72 bg-emerald-800 text-white flex flex-col">
     <div class="p-6 text-center">
       <img src="{{ asset('images/user.png') }}" class="mx-auto w-24 h-24 rounded-full border-4 border-white shadow" alt="avatar">
-      <h2 class="mt-4 font-bold">{{ $user->name ?? Auth::user()->name }}</h2>
+      <h2 class="mt-4 font-bold">Selamat Datang Siswa</h2>
       <p class="text-sm text-emerald-200">{{ Auth::user()->email }}</p>
     </div>
 
@@ -39,7 +39,10 @@
         </svg>
       </div>
       <div>
-        <h1 class="text-3xl font-bold text-emerald-700">Halo, {{ $user->name ?? Auth::user()->name }} 👋</h1>
+     <h1 class="text-3xl font-bold text-emerald-700">
+    Halo, Selamat Datang Siswa 👋
+</h1>
+
         <p class="text-gray-600">Berikut status izin yang diajukan untukmu oleh orang tua.</p>
       </div>
     </div>

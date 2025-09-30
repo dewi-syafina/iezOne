@@ -8,22 +8,28 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-   public function index()
+    public function index()
     {
-        $orangtua = Auth::user();
-        $siswa = $orangtua->siswa; // relasi hasOne
+        // ambil data user yang login
+        $user = Auth::user();
 
-        if (!$siswa) {
-            // solusi 1: tampilkan view khusus
-            return view('orangtua.no-siswa'); 
+        // ambil data orangtua dari relasi user -> orangTua
+        $orangtua = $user->orangTua;
 
-            // atau solusi 2: redirect ke halaman lain (contoh ke /profile)
-            // return redirect()->route('profile.edit')
-            //     ->with('error', 'Belum ada siswa yang terhubung dengan akun ini.');
+        if (!$orangtua) {
+            return view('orangtua.no-orangtua');
         }
 
-        $izins = Izin::where('siswa_id', $siswa->id)->get();
+        // ambil semua siswa yang terkait dengan orang tua ini
+        $siswas = $orangtua->siswa;
 
-        return view('orangtua.dashboard', compact('izins', 'siswa'));
+        if ($siswas->isEmpty()) {
+            return view('orangtua.no-siswa');
+        }
+
+        // ambil semua izin untuk semua siswa terkait
+        $izins = Izin::whereIn('siswa_id', $siswas->pluck('id'))->get();
+
+        return view('orangtua.dashboard', compact('izins', 'siswas', 'orangtua'));
     }
 }

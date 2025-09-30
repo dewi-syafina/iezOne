@@ -12,14 +12,24 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orang_tuas', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-        $table->foreignId('siswa_id')->constrained('siswas')->onDelete('cascade');
-        $table->timestamps();
+            $table->id();
+
+            // Akun orang tua
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+
+            // Relasi ke siswa
+            $table->unsignedBigInteger('siswa_id')->nullable();
+            $table->foreign('siswa_id')->references('id')->on('siswas')->onDelete('set null');
+
+            $table->string('nama')->nullable();
+            $table->timestamps();
         });
     }
 
-
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::dropIfExists('orang_tuas');

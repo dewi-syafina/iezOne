@@ -30,11 +30,11 @@
                 <div class="flex flex-wrap gap-4">
                     <div class="bg-white bg-opacity-20 rounded-lg px-4 py-2 backdrop-blur-sm">
                         <div class="text-sm text-blue-100">Anak Anda</div>
-                        <div class="font-semibold">{{ optional(Auth::user()->siswa)->nama ?? 'Belum ada data siswa' }}</div>
+                        <div class="font-semibold">{{ optional(Auth::user()->orangTua->siswa)->nama ?? 'Belum ada data siswa' }}</div>
                     </div>
                     <div class="bg-white bg-opacity-20 rounded-lg px-4 py-2 backdrop-blur-sm">
                         <div class="text-sm text-blue-100">Kelas</div>
-                        <div class="font-semibold">{{ optional(Auth::user()->siswa)->kelas ?? 'Belum ada data' }}</div>
+                        <div class="font-semibold">{{ optional(Auth::user()->orangTua->siswa)->kelas ?? 'Belum ada data' }}</div>
                     </div>
                 </div>
             </div>

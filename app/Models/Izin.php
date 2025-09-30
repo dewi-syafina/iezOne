@@ -10,6 +10,7 @@ class Izin extends Model
 
     protected $fillable = [
         'siswa_id',
+        'wali_kelas_id',
         'orang_tua_id',
         'tanggal_mulai',
         'tanggal_selesai',
@@ -27,5 +28,10 @@ class Izin extends Model
     public function orangTua()
     {
         return $this->belongsTo(User::class, 'orang_tua_id');
+    }
+
+    public function waliKelas()
+    {
+        return $this->belongsTo(User::class, 'wali_kelas_id');
     }
 }

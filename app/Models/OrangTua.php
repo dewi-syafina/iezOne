@@ -1,36 +1,19 @@
 <?php
 
-
 namespace App\Models;
 
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 
 class OrangTua extends Model
 {
-    use HasFactory;
+    protected $table = 'orang_tuas';
+    protected $fillable = ['user_id','nama'];
 
-
-    protected $fillable = ['user_id','siswa_id'];
-
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-
-    public function siswa()
-    {
-        return $this->belongsTo(Siswa::class);
-    }
-
-
-
-    public function izins()
-    {
-        return $this->hasMany(Izin::class);
+    public function siswa() {
+        return $this->hasMany(Siswa::class, 'orangtua_id');
     }
 }

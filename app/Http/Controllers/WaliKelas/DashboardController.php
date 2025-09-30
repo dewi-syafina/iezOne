@@ -24,6 +24,8 @@ class DashboardController extends Controller
                 'status_kehadiran' => $i->status_kehadiran ?? $i->jenis ?? 'menunggu',
                 'bukti'            => $i->bukti ?? $i->bukti_path ?? $i->file ?? null,
                 'status'           => $i->status ?? 'menunggu',
+
+                'updated_at'       => $i->updated_at,
             ];
         });
 

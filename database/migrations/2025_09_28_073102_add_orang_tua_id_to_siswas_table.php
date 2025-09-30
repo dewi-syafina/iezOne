@@ -6,31 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::table('siswas', function (Blueprint $table) {
-            $table->unsignedBigInteger('orang_tua_id')->nullable()->after('id');
+            if (!Schema::hasColumn('siswas', 'orangtua_id')) {
+                $table->unsignedBigInteger('orangtua_id')->nullable()->after('id');
 
-            $table->foreign('orang_tua_id')
-                  ->references('id')->on('users') // asumsi orang tua disimpan di tabel users
-                  ->onDelete('cascade');
+                $table->foreign('orangtua_id')
+                      ->references('id')->on('users') // orang tua ada di tabel users
+                      ->onDelete('cascade');
+            }
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('siswas', function (Blueprint $table) {
-            $table->unsignedBigInteger('orang_tua_id')->nullable()->after('id');
-
-            $table->foreign('orang_tua_id')
-                  ->references('id')->on('users') // asumsi orang tua disimpan di tabel users
-                  ->onDelete('cascade');
+            $table->dropForeign(['orangtua_id']);
+            $table->dropColumn('orangtua_id');
         });
     }
 };

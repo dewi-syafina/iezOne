@@ -3,33 +3,23 @@
 namespace App\Http\Controllers\Siswa;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Izin;
 
 class DashboardController extends Controller
 {
-        public function index()
+    public function index()
     {
-        $user = Auth::user();
+        // Ambil user dari guard siswa
+        $user = Auth::guard('siswa')->user();
 
-        // ambil siswa milik orang tua yang login
-        $siswa = $user->siswa;
-
-        if (!$siswa) {
-            $izins = collect();
-            $totalIzin = 0;
-            $izinDisetujui = 0;
-            $izinDitolak = 0;
-
-            return view('siswa.dashboard', compact(
-                'izins','totalIzin','izinDisetujui','izinDitolak','user'
-            ));
+        if (!$user) {
+            return redirect()->route('login')->withErrors('Silakan login sebagai siswa.');
         }
 
-        // Ambil izin hanya untuk anaknya
-        $izins = Izin::where('siswa_id', $siswa->id)
-            ->with('orangTua','waliKelas')
+        // Ambil izin berdasarkan siswa yg login
+        $izins = Izin::where('siswa_id', $user->id)
+            ->with('orangTua', 'waliKelas')
             ->orderByDesc('created_at')
             ->get();
 
@@ -38,7 +28,7 @@ class DashboardController extends Controller
         $izinDitolak   = $izins->where('status', 'ditolak')->count();
 
         return view('siswa.dashboard', compact(
-            'izins','totalIzin','izinDisetujui','izinDitolak','user'
+            'izins', 'totalIzin', 'izinDisetujui', 'izinDitolak', 'user'
         ));
     }
 }

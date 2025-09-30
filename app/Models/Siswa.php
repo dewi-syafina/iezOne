@@ -1,35 +1,19 @@
 <?php
 
-
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-
-class Siswa extends Model
+class Siswa extends Authenticatable
 {
-    use HasFactory;
+    use Notifiable;
 
-
-    protected $fillable = ['user_id','nama','kelas'];
-
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
+    protected $fillable = ['nis','nama','kelas','password','orangtua_id'];
+    protected $hidden = ['password','remember_token'];
 
     public function orangTua()
     {
-        return $this->belongsTo(User::class, 'orang_tua_id');
-    }
-
-
-    public function izins()
-    {
-        return $this->hasMany(Izin::class);
+        return $this->belongsTo(OrangTua::class, 'orangtua_id');
     }
 }

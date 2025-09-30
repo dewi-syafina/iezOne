@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Siswa\DashboardSiswaController;
-use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\Auth\CustomLoginController;
 use App\Http\Controllers\OrangTua\IzinController as OrangTuaIzinController;
 use App\Http\Controllers\WaliKelas\PengajuanController as WaliPengajuanController;
 use App\Http\Controllers\Siswa\StatusController as SiswaStatusController;
@@ -13,22 +13,16 @@ use App\Http\Controllers\Siswa\IzinController as SiswaIzinController;
 use App\Http\Controllers\WaliKelas\DashboardController as WaliDashboardController;
 use App\Http\Controllers\OrangTua\DashboardController as OrangTuaDashboardController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
-
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Dashboard utama → cek role di DashboardController
+// ======================= DASHBOARD UTAMA (redirect sesuai role) =======================
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-// Profile
+// ======================= PROFILE =======================
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -65,9 +59,11 @@ Route::middleware(['auth'])->prefix('siswa')->name('siswa.')->group(function () 
     Route::get('/izin/{izin}', [SiswaIzinController::class, 'show'])->name('izin.show');
 });
 
-// ======================= LAPORAN =======================
-Route::middleware(['auth'])->group(function () {
-    Route::get('/laporan/siswa', [LaporanController::class, 'siswa'])->name('laporan.siswa');
-});
+// ======================= LOGIN CUSTOM =======================
+Route::get('/login', [CustomLoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [CustomLoginController::class, 'login'])->name('login.custom');
+Route::post('/logout', [CustomLoginController::class, 'logout'])->name('logout');
 
+// ======================= AUTH LAIN (REGISTER, RESET PASSWORD) =======================
+// catatan: login/logout bawaan JANGAN dipakai, biar nggak bentrok dengan CustomLoginController
 require __DIR__.'/auth.php';
